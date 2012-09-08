@@ -45,11 +45,25 @@
       <!-- "provided" so that we don't deploy -->
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-codeserver</artifactId>
+      <version>${gwtVersion}</version>
+      <!-- "provided" so that we don't deploy -->
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-elemental</artifactId>
       <version>${gwtVersion}</version>
+      <!-- "provided" so that we don't deploy -->
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava-gwt</artifactId>
+      <version>10.0.1</version>
       <!-- "provided" so that we don't deploy -->
       <scope>provided</scope>
     </dependency>
