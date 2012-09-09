@@ -73,15 +73,15 @@
      Task queue servlets.  We require admin as described in
      http://code.google.com/appengine/docs/java/taskqueue/overview-push.html#Securing_URLs_for_Tasks
     -->
-  <!-- <security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <url-pattern>/taskqueue/*</url-pattern>
       <url-pattern>/_ah/queue/__deferred__</url-pattern>
     </web-resource-collection>
-    <auth-constraint>
+    <!-- <auth-constraint>
       <role-name>admin</role-name>
-    </auth-constraint>
-  </security-constraint> -->
+    </auth-constraint> -->
+  </security-constraint>
 
   <!--
      Object-store pages - no constraints, constraints are

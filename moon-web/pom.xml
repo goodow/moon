@@ -92,13 +92,27 @@
       <artifactId>moon-walkaround</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.goodow.moon</groupId>
+      <artifactId>moon-walkaround</artifactId>
+      <version>${project.version}</version>
+      <classifier>sources</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.goodow.moon</groupId>
+      <artifactId>moon-wave</artifactId>
+      <version>${project.version}</version>
+      <classifier>sources</classifier>
+      <scope>provided</scope>
+    </dependency>
 
   </dependencies>
   
-   <build>
+  <build>
     <!-- Generate compiled stuff in the folder used for development mode -->
     <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
-
+   
     <plugins>
       <!-- GWT Maven Plugin-->
       <plugin>
@@ -139,15 +153,33 @@
           <runTarget>/</runTarget>
           <!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
           <compileReport>true</compileReport>
-          <module>com.goodow.moon.client.Moon</module>
+          <module>com.goodow.moon.web.client.Moon</module>
           <appEngineVersion>${gae.version}</appEngineVersion>
           <appEngineHome>${gae.home}</appEngineHome>
           <logLevel>INFO</logLevel>
           <style>${gwt.style}</style>
-
+          <extraJvmArgs>-Xmx1024M -Xss2M</extraJvmArgs>
           <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
           <copyWebapp>true</copyWebapp>
         </configuration>
+      </plugin>
+      <!-- Google App Engine plugin -->
+      <plugin>
+        <groupId>net.kindleit</groupId>
+        <artifactId>maven-gae-plugin</artifactId>
+        <version>0.9.4</version>
+        <configuration>
+          <serverId>gae-deploy</serverId>
+        </configuration>
+        <executions>
+          <execution>
+            <id />
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- Mark the project for Google Plugin for Eclipse (GPE) -->
@@ -158,17 +190,49 @@
           <downloadSources>true</downloadSources>
           <downloadJavadocs>false</downloadJavadocs>
           <wtpversion>2.0</wtpversion>
-          <additionalBuildcommands>
-            <buildCommand>
-              <name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
-            </buildCommand>
-          </additionalBuildcommands>
           <additionalProjectnatures>
-            <projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
             <projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
           </additionalProjectnatures>
         </configuration>
       </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <warSourceExcludes>moon/**</warSourceExcludes>
+        </configuration>
+      </plugin>
     </plugins>
+    <!-- Required by m2e for import into eclipse. No effect on command line builds  -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>net.kindleit</groupId>
+                    <artifactId>maven-gae-plugin</artifactId>
+                    <versionRange>[0.7.3,)</versionRange>
+                    <goals>
+                      <goal>unpack</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
