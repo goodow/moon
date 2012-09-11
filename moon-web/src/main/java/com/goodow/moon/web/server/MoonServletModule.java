@@ -109,14 +109,16 @@ public class MoonServletModule extends WalkaroundServletModule {
       }
     }
 
-    for (String path : Arrays.asList("/admin/*", "/upload", "/uploadform", "/download",
+    for (String path : Arrays.asList("/admin", "/admin/*", "/upload", "/uploadform", "/download",
         "/thumbnail", "/attachmentinfo", "/gadgets/*")) {
       filter(path).through(InteractiveAuthFilter.class);
     }
     for (String path : Arrays.asList("/gwterr")) {
       filter(path).through(RpcAuthFilter.class);
     }
-    filter("/admin/*").through(AdminAuthFilter.class);
+    for (String path : Arrays.asList("/admin", "/admin/*")) {
+      filter(path).through(AdminAuthFilter.class);
+    }
 
     MapBinder<String, OAuthProvider> aAuthProviders =
         MapBinder.newMapBinder(binder(), String.class, OAuthProvider.class);

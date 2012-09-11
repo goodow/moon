@@ -52,6 +52,7 @@ public class AdminAuthFilter implements Filter {
               : "(not logged in)"));
       throw new BadRequestException();
     }
+    filterChain.doFilter(request, response);
   }
 
   @Override

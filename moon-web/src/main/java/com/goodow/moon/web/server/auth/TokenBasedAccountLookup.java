@@ -103,7 +103,8 @@ public class TokenBasedAccountLookup implements AccountLookup {
     Record record;
     try {
       record = accountStore.get().get(new StableUserId(userId));
-      if (record == null) {
+      if (record == null || record.getOAuthCredentials() == null
+          || record.getOAuthCredentials().getAccessToken() == null) {
         return false;
       }
     } catch (PermanentFailure e) {
