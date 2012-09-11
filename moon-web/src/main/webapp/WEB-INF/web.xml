@@ -42,17 +42,17 @@
      Require login & SSL for all pages by default
      see http://code.google.com/appengine/docs/java/config/webxml.html
     -->
-  <security-constraint>
+  <!-- <security-constraint>
     <web-resource-collection>
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>*</role-name>
     </auth-constraint>
-    <!-- <user-data-constraint>
+    <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint> -->
-  </security-constraint>
+    </user-data-constraint>
+  </security-constraint> -->
 
   <!--
      Admin-only pages
