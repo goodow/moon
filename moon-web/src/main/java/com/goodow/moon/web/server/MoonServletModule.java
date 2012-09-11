@@ -13,6 +13,7 @@
  */
 package com.goodow.moon.web.server;
 
+import com.goodow.moon.web.server.auth.AdminAuthFilter;
 import com.goodow.moon.web.server.auth.GoogleOAuthProvider;
 import com.goodow.moon.web.server.auth.InteractiveAuthFilter;
 import com.goodow.moon.web.server.auth.LoginHandler;
@@ -32,6 +33,7 @@ import com.google.walkaround.util.server.servlet.HandlerServlet;
 import com.google.walkaround.util.server.servlet.PrefixPathHandlers;
 import com.google.walkaround.wave.server.WalkaroundServletModule;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -106,6 +108,15 @@ public class MoonServletModule extends WalkaroundServletModule {
         prefixPathBinder.addBinding(e.getKey()).to(e.getValue());
       }
     }
+
+    for (String path : Arrays.asList("/admin/*", "/upload", "/uploadform", "/download",
+        "/thumbnail", "/attachmentinfo", "/gadgets/*")) {
+      filter(path).through(InteractiveAuthFilter.class);
+    }
+    for (String path : Arrays.asList("/gwterr")) {
+      filter(path).through(RpcAuthFilter.class);
+    }
+    filter("/admin/*").through(AdminAuthFilter.class);
 
     MapBinder<String, OAuthProvider> aAuthProviders =
         MapBinder.newMapBinder(binder(), String.class, OAuthProvider.class);

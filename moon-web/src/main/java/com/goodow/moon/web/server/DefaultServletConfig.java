@@ -21,7 +21,7 @@ import com.google.walkaround.wave.server.DefaultModule;
 
 public class DefaultServletConfig extends GuiceServletContextListener {
   static {
-    GuiceSetup.addExtraModule(new DefaultModule());
+    com.google.walkaround.wave.server.GuiceSetup.addExtraModule(new DefaultModule());
   }
 
   @Override

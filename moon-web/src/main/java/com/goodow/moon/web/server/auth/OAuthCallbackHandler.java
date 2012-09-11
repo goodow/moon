@@ -35,6 +35,7 @@ import com.google.walkaround.wave.server.gxp.AuthPopup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.waveprotocol.wave.model.wave.ParticipantId;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -148,10 +149,16 @@ public class OAuthCallbackHandler extends
     JSONObject toRtn = new JSONObject();
     if (record != null) {
       try {
-        toRtn.put(TokenBasedAccountLookup.USER_ID_HEADER_KEY, record.getUserId().getId());
-        toRtn.put("participantId", record.getParticipantId().getAddress());
-        toRtn.put("access_token", xsrfHelper.get().createToken(
-            record.getOAuthCredentials().getAccessToken()));
+        StableUserId userId = record.getUserId();
+        ParticipantId participantId = record.getParticipantId();
+        OAuthCredentials oAuthCredentials = record.getOAuthCredentials();
+        userContext.setUserId(userId);
+        userContext.setParticipantId(participantId);
+        userContext.setOAuthCredentials(oAuthCredentials);
+
+        toRtn.put(TokenBasedAccountLookup.USER_ID_HEADER_KEY, userId.getId());
+        toRtn.put("participantId", participantId.getAddress());
+        toRtn.put("access_token", xsrfHelper.get().createToken(oAuthCredentials.getAccessToken()));
       } catch (JSONException e) {
         throw new RuntimeException("Bad JSON: " + toRtn, e);
       }
