@@ -71,7 +71,7 @@ public class GoogleOAuthProvider implements OAuthProvider {
 
   @Override
   public String getScope() {
-    return "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+    return "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/m8/feeds";
   }
 
   @Override
