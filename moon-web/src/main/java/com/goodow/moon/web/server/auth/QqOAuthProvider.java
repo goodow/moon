@@ -73,7 +73,7 @@ public class QqOAuthProvider implements OAuthProvider {
 
   @Override
   public String getScope() {
-    return "get_user_info,get_info";
+    return "get_user_info,get_info,get_other_info,get_fanslist,get_idollist";
   }
 
   @Override

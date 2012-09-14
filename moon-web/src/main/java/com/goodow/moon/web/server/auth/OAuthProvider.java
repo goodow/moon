@@ -101,8 +101,8 @@ public interface OAuthProvider {
         content = req.send(oAuthProvider.getTokenEndpoint(), HTTPMethod.POST);
       } catch (InvalidStoreRequestException e) {
         // if (isRefresh) {
-        log.log(Level.WARNING, "exchangeOAuthCredentials() failed; perhaps revoked", e);
-        throw new RuntimeException("exchangeOAuthCredentials() failed; perhaps revoked", e);
+        log.log(Level.WARNING, "exchangeCodeForToken() failed; perhaps revoked", e);
+        throw new NeedNewOAuthTokenException("exchangeCodeForToken() failed; perhaps revoked", e);
         // }
       }
 
@@ -120,9 +120,8 @@ public interface OAuthProvider {
             ? jsonObject.getString("refresh_token") : null);
       } catch (JSONException e) {
         // if (isRefresh) {
-        log.log(Level.WARNING, "exchangeOAuthCredentials() failed; perhaps revoked", e);
-        throw new NeedNewOAuthTokenException("exchangeOAuthCredentials() failed; perhaps revoked",
-            e);
+        log.log(Level.WARNING, "exchangeCodeForToken() failed; perhaps revoked", e);
+        throw new NeedNewOAuthTokenException("exchangeCodeForToken() failed; perhaps revoked", e);
         // }
       }
     }

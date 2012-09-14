@@ -4,9 +4,9 @@
   <inherits name="com.google.walkaround.wave.client.Walkaround"/>
   <source path=""/>
 
-  <set-property name="compiler.stackMode" value="emulated" />
+  <!-- <set-property name="compiler.stackMode" value="emulated" />
   <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true" />
-  <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true" />
+  <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true" /> -->
   
   <set-property name="user.agent" value="safari"/>
   <set-property name="mobile.user.agent" value="not_mobile" />

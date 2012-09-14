@@ -127,8 +127,7 @@ public class OAuthCallbackHandler extends
 
     resp.setContentType("text/html");
     resp.setCharacterEncoding("UTF-8");
-    Cookie uid =
-        new Cookie(TokenBasedAccountLookup.USER_ID_COOKIE_KEY, userContext.getUserId().getId());
+    Cookie uid = new Cookie(TokenBasedAccountLookup.USER_ID_KEY, userContext.getUserId().getId());
     uid.setMaxAge(expirySeconds);
     resp.addCookie(uid);
     Cookie secret =
@@ -156,7 +155,7 @@ public class OAuthCallbackHandler extends
         userContext.setParticipantId(participantId);
         userContext.setOAuthCredentials(oAuthCredentials);
 
-        toRtn.put(TokenBasedAccountLookup.USER_ID_HEADER_KEY, userId.getId());
+        toRtn.put(TokenBasedAccountLookup.USER_ID_KEY, userId.getId());
         toRtn.put("participantId", participantId.getAddress());
         toRtn.put("access_token", xsrfHelper.get().createToken(oAuthCredentials.getAccessToken()));
       } catch (JSONException e) {

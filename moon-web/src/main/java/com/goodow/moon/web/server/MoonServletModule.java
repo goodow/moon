@@ -32,6 +32,8 @@ import com.google.walkaround.util.server.servlet.ExactPathHandlers;
 import com.google.walkaround.util.server.servlet.HandlerServlet;
 import com.google.walkaround.util.server.servlet.PrefixPathHandlers;
 import com.google.walkaround.wave.server.WalkaroundServletModule;
+import com.google.walkaround.wave.server.robot.RobotApiModule;
+import com.google.walkaround.wave.server.robot.dataapi.DataApiHandler;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -43,7 +45,10 @@ public class MoonServletModule extends WalkaroundServletModule {
   private static final ImmutableMap<String, Class<? extends AbstractHandler>> EXACT_PATH_HANDLERS =
       new ImmutableMap.Builder<String, Class<? extends AbstractHandler>>()
       // Pages that browsers will navigate to.
-          .put("/login", LoginHandler.class).build();
+          .put("/login", LoginHandler.class)
+
+          // Endpoints for RPCs etc.
+          .put("/robot/dataapi", DataApiHandler.class).build();
 
   /** Path bindings for handlers that serve all paths under some prefix. */
   private static final ImmutableMap<String, Class<? extends AbstractHandler>> PREFIX_PATH_HANDLERS =
@@ -113,7 +118,7 @@ public class MoonServletModule extends WalkaroundServletModule {
         "/thumbnail", "/attachmentinfo", "/gadgets/*")) {
       filter(path).through(InteractiveAuthFilter.class);
     }
-    for (String path : Arrays.asList("/gwterr")) {
+    for (String path : Arrays.asList("/gwterr", "/robot/dataapi")) {
       filter(path).through(RpcAuthFilter.class);
     }
     for (String path : Arrays.asList("/admin", "/admin/*")) {
@@ -124,6 +129,8 @@ public class MoonServletModule extends WalkaroundServletModule {
         MapBinder.newMapBinder(binder(), String.class, OAuthProvider.class);
     aAuthProviders.addBinding("google").to(GoogleOAuthProvider.class);
     aAuthProviders.addBinding("qq").to(QqOAuthProvider.class);
+
+    install(new RobotApiModule());
   }
 
 }
