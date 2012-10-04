@@ -187,7 +187,7 @@
           <!-- URL that should be automatically opened in the GWT shell (gwt:run). -->
           <runTarget>/</runTarget>
           <!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
-          <compileReport>true</compileReport>
+          <compileReport>false</compileReport>
           <module>com.goodow.moon.web.client.Moon</module>
           <appEngineVersion>${gae.version}</appEngineVersion>
           <appEngineHome>${gae.home}</appEngineHome>

@@ -41,7 +41,7 @@
   <mirrors>
     <mirror>
       <id>repo</id>
-      <mirrorOf>external:*,!goodow</mirrorOf>
+      <mirrorOf>external:*,!goodow-sonatype-oss,!goodow-wave</mirrorOf>
       <name>Nexus Repo</name>
       <url>http://dev.retechcorp.com:8081/nexus/content/groups/public</url>
     </mirror>
@@ -52,7 +52,7 @@
       <id>dev</id>
       <repositories>
         <repository>
-          <id>goodow</id>
+          <id>goodow-sonatype-oss</id>
           <url>https://oss.sonatype.org/content/groups/public</url>
           <snapshots>
             <enabled>true</enabled>
