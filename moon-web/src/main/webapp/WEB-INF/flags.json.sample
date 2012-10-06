@@ -1,8 +1,8 @@
 /* Flags */
 {
 
-oauth_client_id: '${oauth_client_id}',
-oauth_client_secret: '${oauth_client_secret}',
+oauth_client_id: '158501807005.apps.googleusercontent.com',
+oauth_client_secret: 'ou47Kn8VWsrExkAeahrCiP1X',
 analytics_account: '',
 
 secret: '${secret}',

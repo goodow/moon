@@ -1,3 +1,11 @@
+== Getting Dependencies ==
+
+  1. Goodow Wave: https://github.com/goodow/wave/blob/moon/README-MAVEN.txt
+  2. Goodow Walkaround: https://github.com/goodow/walkaround/
+
+
+== Development And Running ==
+
 -- Option A: Import your project into Eclipse --
 
 Configure Eclipse following the instructions at 
@@ -27,9 +35,11 @@ exactly how to build your project. This file has been tested to work
 against Maven 2.2.1. The following assumes 'mvn' is on your command
 line path.
 
-To compile your project and deploy it to Google AppEngine:
+To compile and run your project on a local Google AppEngine development web server:
 
-  mvn clean gae:deploy
+  cp src/main/webapp/WEB-INF/flags.json.sample src/main/webapp/WEB-INF/flags.json
+  cp src/main/webapp/WEB-INF/config.json.sample src/main/webapp/WEB-INF/config.json
+  mvn clean gae:run
 
 For a full listing of other goals, visit:
 http://mojo.codehaus.org/gwt-maven-plugin/plugin-info.html
