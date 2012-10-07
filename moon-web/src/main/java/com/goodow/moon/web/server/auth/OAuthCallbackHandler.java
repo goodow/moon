@@ -131,7 +131,7 @@ public class OAuthCallbackHandler extends
     uid.setMaxAge(expirySeconds);
     resp.addCookie(uid);
     Cookie secret =
-        new Cookie(TokenBasedAccountLookup.SECRET_TOKEN_COOKIE_KEY, xsrfHelper.get().createToken(
+        new Cookie(TokenBasedAccountLookup.TOKEN_COOKIE_KEY, xsrfHelper.get().createToken(
             userContext.getOAuthCredentials().getAccessToken()));
     secret.setMaxAge(expirySeconds);
     resp.addCookie(secret);

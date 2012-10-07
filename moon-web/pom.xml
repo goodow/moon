@@ -16,6 +16,11 @@
     </license>
   </licenses>
   
+  <properties>
+    <oAuthClientId.google>158501807005.apps.googleusercontent.com</oAuthClientId.google>
+    <oAuthClientSecret.google>ou47Kn8VWsrExkAeahrCiP1X</oAuthClientSecret.google>
+  </properties>
+  
   <dependencies>
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
@@ -100,6 +105,27 @@
     </resources>
     <plugins>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/src/main/webapp/WEB-INF/</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>${basedir}/src/main/webapp/WEB-INF/config-templates/</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
@@ -166,7 +192,7 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
-            <phase>generate-sources</phase>
+            <phase>validate</phase>
             <configuration>
               <tasks>
                 <taskdef name="gxpc" classname="com.google.gxp.compiler.ant.GxpcTask" classpathref="maven.compile.classpath" />

@@ -1,0 +1,7 @@
+/* Flags */
+{
+
+oauth_client_id_qq: '${oAuthClientId.qq}',
+oauth_client_secret_qq: '${oAuthClientSecret.qq}'
+
+}

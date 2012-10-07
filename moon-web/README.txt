@@ -37,8 +37,6 @@ line path.
 
 To compile and run your project on a local Google AppEngine development web server:
 
-  cp src/main/webapp/WEB-INF/flags.json.sample src/main/webapp/WEB-INF/flags.json
-  cp src/main/webapp/WEB-INF/config.json.sample src/main/webapp/WEB-INF/config.json
   mvn clean gae:run
 
 For a full listing of other goals, visit:

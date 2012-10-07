@@ -35,12 +35,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class TokenBasedAccountLookup implements AccountLookup {
   private static final Logger log = Logger.getLogger(InteractiveAuthFilter.class.getName());
-  public static final String USER_ID_KEY = "uid";
-  public static final String SECRET_TOKEN_COOKIE_KEY = "s";
-  public static final String SECRET_TOKEN_HEADER_KEY = "Authorization";
-  private static final String SECRET_TOKEN_HEADER_VALUE_PREFIX_BEARER = "Bearer ";
-  private static final String SECRET_TOKEN_HEADER_VALUE_PREFIX_OAUTH = "OAuth ";
-  public static final String SECRET_TOKEN_QUERY_PARAM_KEY = "access_token";
+  public static final String USER_ID_KEY = "u";
+  public static final String TOKEN_COOKIE_KEY = "t";
+  private static final String TOKEN_HEADER_KEY = "Authorization";
+  private static final String TOKEN_HEADER_VALUE_PREFIX_BEARER = "Bearer ";
+  private static final String TOKEN_HEADER_VALUE_PREFIX_OAUTH = "OAuth ";
+  private static final String TOKEN_REQUEST_PARAM_KEY = "access_token";
 
   public static void redirectToLoginPage(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
@@ -90,24 +90,24 @@ public class TokenBasedAccountLookup implements AccountLookup {
       return true;
     }
     String userId = getCookie(req, USER_ID_KEY);
-    String secretToken = getCookie(req, SECRET_TOKEN_COOKIE_KEY);
+    String secretToken = getCookie(req, TOKEN_COOKIE_KEY);
     if (userId == null) {
       userId = req.getHeader(USER_ID_KEY);
     }
     if (secretToken == null) {
-      String rawToken = req.getHeader(SECRET_TOKEN_HEADER_KEY);
-      if (rawToken != null && rawToken.startsWith(SECRET_TOKEN_HEADER_VALUE_PREFIX_BEARER)) {
-        secretToken = rawToken.substring(SECRET_TOKEN_HEADER_VALUE_PREFIX_BEARER.length());
+      String rawToken = req.getHeader(TOKEN_HEADER_KEY);
+      if (rawToken != null && rawToken.startsWith(TOKEN_HEADER_VALUE_PREFIX_BEARER)) {
+        secretToken = rawToken.substring(TOKEN_HEADER_VALUE_PREFIX_BEARER.length());
       }
-      if (rawToken != null && rawToken.startsWith(SECRET_TOKEN_HEADER_VALUE_PREFIX_OAUTH)) {
-        secretToken = rawToken.substring(SECRET_TOKEN_HEADER_VALUE_PREFIX_OAUTH.length());
+      if (rawToken != null && rawToken.startsWith(TOKEN_HEADER_VALUE_PREFIX_OAUTH)) {
+        secretToken = rawToken.substring(TOKEN_HEADER_VALUE_PREFIX_OAUTH.length());
       }
     }
     if (userId == null) {
       userId = req.getParameter(USER_ID_KEY);
     }
     if (secretToken == null) {
-      secretToken = req.getParameter(SECRET_TOKEN_QUERY_PARAM_KEY);
+      secretToken = req.getParameter(TOKEN_REQUEST_PARAM_KEY);
     }
     if (userId == null || secretToken == null) {
       return false;

@@ -54,7 +54,7 @@ public class LogoutHandler extends com.google.walkaround.wave.server.servlet.Log
       Cookie uid = new Cookie(TokenBasedAccountLookup.USER_ID_KEY, null);
       uid.setMaxAge(0);
       resp.addCookie(uid);
-      Cookie secret = new Cookie(TokenBasedAccountLookup.SECRET_TOKEN_COOKIE_KEY, null);
+      Cookie secret = new Cookie(TokenBasedAccountLookup.TOKEN_COOKIE_KEY, null);
       secret.setMaxAge(0);
       resp.addCookie(secret);
       resp.sendRedirect("/");
