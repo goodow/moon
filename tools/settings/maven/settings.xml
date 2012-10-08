@@ -32,24 +32,24 @@
 	  <password>password</password>
 	</server>
     <server>
-	  <id>gae</id>
+	  <id>gae-deploy</id>
 	  <username>username</username>
 	  <password>password</password>
 	</server>
   </servers>
 
-  <mirrors>
+  <!-- <mirrors>
     <mirror>
       <id>repo</id>
       <mirrorOf>external:*,!goodow-sonatype-oss,!goodow-wave</mirrorOf>
       <name>Nexus Repo</name>
-      <url>http://dev.retechcorp.com:8081/nexus/content/groups/public</url>
+      <url>http://dev.goodow.com:8081/nexus/content/groups/public</url>
     </mirror>
-  </mirrors>
+  </mirrors> -->
 
   <profiles>
     <profile>
-      <id>dev</id>
+      <id>goodow</id>
       <repositories>
         <repository>
           <id>goodow-sonatype-oss</id>
@@ -65,7 +65,7 @@
             <checksumPolicy>fail</checksumPolicy>
           </releases>
         </repository>
-        <repository>
+        <!-- <repository>
           <id>central</id>
           <url>http://central</url>
           <snapshots>
@@ -78,9 +78,9 @@
             <updatePolicy>always</updatePolicy>
             <checksumPolicy>fail</checksumPolicy>
           </releases>
-        </repository>
+        </repository> -->
       </repositories>
-      <pluginRepositories>
+      <!-- <pluginRepositories>
         <pluginRepository>
           <id>central</id>
           <url>http://central</url>
@@ -95,16 +95,18 @@
             <checksumPolicy>fail</checksumPolicy>
           </releases>
         </pluginRepository>
-      </pluginRepositories>
+      </pluginRepositories> -->
       <properties>
-        <log.lvl>warn</log.lvl>
-        <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+        <!-- <oAuthClientId.google>oAuthClientId</oAuthClientId.google>
+        <oAuthClientSecret.google>oAuthClientSecret</oAuthClientSecret.google>
+        <oAuthClientId.qq>oAuthClientId</oAuthClientId.qq>
+        <oAuthClientSecret.qq>oAuthClientSecret</oAuthClientSecret.qq> -->
       </properties>
     </profile>
   </profiles>
 
   <activeProfiles>
-    <activeProfile>dev</activeProfile>
+    <activeProfile>goodow</activeProfile>
   </activeProfiles>
   <!-- <localRepository>${user.home}/.m2/repository</localRepository> -->
 </settings>

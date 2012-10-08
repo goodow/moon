@@ -51,7 +51,13 @@ import javax.servlet.http.HttpServletResponse;
 public class OAuthCallbackHandler extends
     com.google.walkaround.wave.server.auth.OAuthCallbackHandler {
 
+  private static final String EMAIL = "email";
+  private static final String ACCESS_TOKEN = "access_token";
   private static final Logger log = Logger.getLogger(OAuthCallbackHandler.class.getName());
+
+  private static String queryEncode(String s) {
+    return UriEscapers.uriQueryStringEscaper(false).escape(s);
+  }
 
   @Inject AccountStore accountStore;
   @Inject UserContext userContext;
@@ -60,6 +66,7 @@ public class OAuthCallbackHandler extends
   @Inject Map<String, OAuthProvider> oAuthProviders;
   @Inject Provider<XsrfHelper> xsrfHelper;
   @Inject @Flag(FlagName.XSRF_TOKEN_EXPIRY_SECONDS) int expirySeconds;
+
   private final MemcacheTable<String, StableUserId> authorizedCodes;
 
   @Inject
@@ -125,17 +132,12 @@ public class OAuthCallbackHandler extends
     authorizedCodes.put(split[1], userInfo.getUserId(), Expiration.byDeltaSeconds(30),
         SetPolicy.ADD_ONLY_IF_NOT_PRESENT);
 
-    resp.setContentType("text/html");
-    resp.setCharacterEncoding("UTF-8");
-    Cookie uid = new Cookie(TokenBasedAccountLookup.USER_ID_KEY, userContext.getUserId().getId());
-    uid.setMaxAge(expirySeconds);
-    resp.addCookie(uid);
-    Cookie secret =
-        new Cookie(TokenBasedAccountLookup.TOKEN_COOKIE_KEY, xsrfHelper.get().createToken(
-            userContext.getOAuthCredentials().getAccessToken()));
-    secret.setMaxAge(expirySeconds);
-    resp.addCookie(secret);
-    AuthPopup.write(resp.getWriter(), new GxpContext(getLocale(req)), analyticsAccount, null);
+    String token = xsrfHelper.get().createToken(userContext.getOAuthCredentials().getAccessToken());
+    if (split[1].startsWith("apps")) {
+      responseSuccessForInstalledApps(req, resp, token);
+    } else {
+      responseSuccessForWeb(req, resp, token);
+    }
   }
 
   @Override
@@ -156,8 +158,8 @@ public class OAuthCallbackHandler extends
         userContext.setOAuthCredentials(oAuthCredentials);
 
         toRtn.put(TokenBasedAccountLookup.USER_ID_KEY, userId.getId());
-        toRtn.put("participantId", participantId.getAddress());
-        toRtn.put("access_token", xsrfHelper.get().createToken(oAuthCredentials.getAccessToken()));
+        toRtn.put(EMAIL, participantId.getAddress());
+        toRtn.put(ACCESS_TOKEN, xsrfHelper.get().createToken(oAuthCredentials.getAccessToken()));
       } catch (JSONException e) {
         throw new RuntimeException("Bad JSON: " + toRtn, e);
       }
@@ -166,6 +168,31 @@ public class OAuthCallbackHandler extends
     resp.setContentType("application/json");
     resp.setCharacterEncoding("UTF-8");
     resp.getWriter().print(toRtn.toString());
+  }
+
+  private void responseSuccessForInstalledApps(HttpServletRequest req, HttpServletResponse resp,
+      String token) throws IOException {
+    StringBuilder sb = new StringBuilder(req.getRequestURI());
+    sb.append("?");
+    sb.append(TokenBasedAccountLookup.USER_ID_KEY).append("=").append(
+        userContext.getUserId().getId());
+    sb.append("&").append(ACCESS_TOKEN).append("=").append(queryEncode(token));
+    sb.append("&").append(EMAIL).append("=").append(
+        queryEncode(userContext.getParticipantId().getAddress()));
+    resp.sendRedirect(sb.toString());
+  }
+
+  private void responseSuccessForWeb(HttpServletRequest req, HttpServletResponse resp, String token)
+      throws IOException {
+    resp.setContentType("text/html");
+    resp.setCharacterEncoding("UTF-8");
+    Cookie uid = new Cookie(TokenBasedAccountLookup.USER_ID_KEY, userContext.getUserId().getId());
+    uid.setMaxAge(expirySeconds);
+    resp.addCookie(uid);
+    Cookie secret = new Cookie(TokenBasedAccountLookup.TOKEN_COOKIE_KEY, token);
+    secret.setMaxAge(expirySeconds);
+    resp.addCookie(secret);
+    AuthPopup.write(resp.getWriter(), new GxpContext(getLocale(req)), analyticsAccount, null);
   }
 
   private String urlEncode(String s) {

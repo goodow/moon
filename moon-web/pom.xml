@@ -177,6 +177,7 @@
         <version>0.9.4</version>
         <configuration>
           <serverId>gae-deploy</serverId>
+          <wait>true</wait>
         </configuration>
         <executions>
           <execution>
