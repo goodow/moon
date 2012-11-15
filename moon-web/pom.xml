@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.goodow.moon</groupId>
@@ -7,7 +8,7 @@
   </parent>
   <artifactId>moon-web</artifactId>
   <packaging>war</packaging>
-  <url>http://code.google.com/p/goodow/</url>
+  <url>https://github.com/goodow/moon/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
     <license>
@@ -15,12 +16,12 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  
+
   <properties>
     <oAuthClientId.google>158501807005.apps.googleusercontent.com</oAuthClientId.google>
     <oAuthClientSecret.google>ou47Kn8VWsrExkAeahrCiP1X</oAuthClientSecret.google>
   </properties>
-  
+
   <dependencies>
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
@@ -39,7 +40,7 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava-gwt</artifactId>
     </dependency>
-    
+
     <!-- Google App Engine (GAE) -->
     <dependency>
       <groupId>com.google.appengine</groupId>
@@ -53,36 +54,36 @@
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-stubs</artifactId>
     </dependency>
-    
-    <!-- Internal projects -->
+
+    <!-- Internal modules -->
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-walkaround</artifactId>
-      <version>${project.version}</version>
+      <groupId>${walkaround.groupId}</groupId>
+      <artifactId>walkaround-all</artifactId>
+      <version>${walkaround.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-walkaround</artifactId>
-      <version>${project.version}</version>
+      <groupId>${walkaround.groupId}</groupId>
+      <artifactId>walkaround-all</artifactId>
+      <version>${walkaround.version}</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-wave</artifactId>
-      <version>${project.version}</version>
+      <groupId>${wave.groupId}</groupId>
+      <artifactId>wave-all</artifactId>
+      <version>${wave.version}</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-walkaround-pst</artifactId>
-      <version>${project.version}</version>
+      <groupId>${walkaround.groupId}</groupId>
+      <artifactId>walkaround-pst-generated</artifactId>
+      <version>${walkaround.version}</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  
+
   <build>
     <!-- Generate compiled stuff in the folder used for development mode -->
     <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
@@ -115,13 +116,13 @@
             </goals>
             <configuration>
               <outputDirectory>${basedir}/src/main/webapp/WEB-INF/</outputDirectory>
-              <resources>          
+              <resources>
                 <resource>
                   <directory>${basedir}/src/main/webapp/WEB-INF/config-templates/</directory>
                   <filtering>true</filtering>
                 </resource>
-              </resources>              
-            </configuration>            
+              </resources>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -143,7 +144,7 @@
           </execution>
         </executions>
       </plugin>
-      <!-- GWT Maven Plugin-->
+      <!-- GWT Maven Plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
@@ -160,7 +161,7 @@
         <configuration>
           <!-- URL that should be automatically opened in the GWT shell (gwt:run). -->
           <runTarget>/</runTarget>
-          <module>com.goodow.moon.web.client.Moon</module>
+          <module>${project.groupId}.web.client.Moon</module>
           <appEngineVersion>${gae.version}</appEngineVersion>
           <appEngineHome>${gae.home}</appEngineHome>
           <logLevel>INFO</logLevel>
@@ -174,7 +175,7 @@
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
-        <version>0.9.4</version>
+        <version>0.9.5</version>
         <configuration>
           <serverId>gae-deploy</serverId>
           <wait>true</wait>
@@ -196,8 +197,11 @@
             <phase>validate</phase>
             <configuration>
               <tasks>
-                <taskdef name="gxpc" classname="com.google.gxp.compiler.ant.GxpcTask" classpathref="maven.compile.classpath" />
-                <gxpc srcdir="${project.build.sourceDirectory}/com/goodow/moon/web/server/gxp" srcpaths="${project.build.sourceDirectory}" destdir="${project.build.directory}/generated-sources" target="com.goodow.moon.web.server.gxp.messages" i18nwarn="true" />
+                <taskdef name="gxpc" classname="com.google.gxp.compiler.ant.GxpcTask"
+                  classpathref="maven.compile.classpath" />
+                <gxpc srcdir="${project.build.sourceDirectory}/com/goodow/moon/web/server/gxp"
+                  srcpaths="${project.build.sourceDirectory}" destdir="${project.build.directory}/generated-sources"
+                  target="${project.groupId}.web.server.gxp.messages" i18nwarn="true" />
               </tasks>
             </configuration>
             <goals>
@@ -219,7 +223,7 @@
           </additionalProjectnatures>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -270,7 +274,7 @@
         </configuration>
       </plugin>
     </plugins>
-    <!-- Required by m2e for import into eclipse. No effect on command line builds  -->
+    <!-- Required by m2e for import into eclipse. No effect on command line builds -->
     <pluginManagement>
       <plugins>
         <plugin>

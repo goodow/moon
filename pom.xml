@@ -1,15 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>com.goodow.wave</groupId>
+    <artifactId>wave-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.goodow.moon</groupId>
-  <artifactId>moon-aggregation</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>moon-parent</artifactId>
   <packaging>pom</packaging>
-  <url>http://code.google.com/p/goodow/</url>
+  <url>https://github.com/goodow/moon/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
     <license>
@@ -18,12 +17,10 @@
     </license>
   </licenses>
   <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    
-    <!-- Don't let your Mac use a crazy non-standard encoding -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <wave.groupId>com.goodow.wave</wave.groupId>
+    <wave.version>${project.version}</wave.version>
+    <walkaround.groupId>com.goodow.walkaround</walkaround.groupId>
+    <walkaround.version>${project.version}</walkaround.version>
   </properties>
   
   <modules>
