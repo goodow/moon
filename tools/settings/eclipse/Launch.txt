@@ -6,4 +6,12 @@
 Super Dev Mode:
 com.google.gwt.dev.codeserver.CodeServer
 com.goodow.moon.web.client.MoonDev 
--Xmx1024m -Xss2m
+-Xmx1024m -Xss2m​-Xmx2048M 
+-XX:MaxPermSize=512M -Xss4M -Xms1024M -XX:MaxNewSize=64M -Dappengine.user.timezone.impl=UTC
+
+-bindAddress 0.0.0.0 
+
+Super Dev Mode:
+com.google.gwt.dev.codeserver.CodeServer
+-noprecompile com.goodow.moon.web.client.MoonDev
+-Xmx1024m -Xss2m 
