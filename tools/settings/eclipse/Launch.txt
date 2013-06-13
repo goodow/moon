@@ -17,3 +17,5 @@ com.google.gwt.dev.codeserver.CodeServer
 -Xmx1024m -Xss2m 
 
 window.sessionStorage["__gwtDevModeHook:moon"] = "http://localhost:9876/moon/moon.nocache.js"
+window.sessionStorage["__gwtDevModeHook:realtime"] = "http://localhost:9876/realtime/realtime.nocache.js"
+
